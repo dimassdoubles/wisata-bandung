@@ -65,8 +65,9 @@ class DetailScreen extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-              
             ),
+            Image.network('https://media-cdn.tripadvisor.com/media/photo-s/0d/7c/59/70/farmhouse-lembang.jpg'),
+            
           ],
         ),
       ),
