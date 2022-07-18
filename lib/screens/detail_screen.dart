@@ -1,7 +1,10 @@
+// ignore_for_file: non_constant_identifier_names
 import 'package:flutter/material.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({Key? key}) : super(key: key);
+
+  final informationTextStyle = const TextStyle(fontFamily: 'Oxygen');
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +23,9 @@ class DetailScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'Staatliches',
                   ),
-                  ),
+                ),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 16),
@@ -29,30 +33,39 @@ class DetailScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(
-                      children: const [
+                      children: [
                         Icon(Icons.calendar_today),
                         SizedBox(
                           height: 8,
                         ),
-                        Text('Open Everyday'),
+                        Text(
+                          'Open Everyday',
+                          style: informationTextStyle,
+                        ),
                       ],
                     ),
                     Column(
-                      children: const [
+                      children: [
                         Icon(Icons.access_time),
                         SizedBox(
                           height: 8,
                         ),
-                        Text('09.00 - 20.00'),
+                        Text(
+                          '09.00 - 20.00',
+                          style: informationTextStyle,
+                        ),
                       ],
                     ),
                     Column(
-                      children: const [
+                      children: [
                         Icon(Icons.monetization_on),
                         SizedBox(
                           height: 8,
                         ),
-                        Text('Rp 25.000'),
+                        Text(
+                          'Rp 25.000',
+                          style: informationTextStyle,
+                        ),
                       ],
                     ),
                   ],
@@ -67,7 +80,8 @@ class DetailScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Image.network('https://media-cdn.tripadvisor.com/media/photo-s/0d/7c/59/70/farmhouse-lembang.jpg'),
+              Image.network(
+                  'https://media-cdn.tripadvisor.com/media/photo-s/0d/7c/59/70/farmhouse-lembang.jpg'),
               Container(
                 height: 150,
                 child: ListView(
