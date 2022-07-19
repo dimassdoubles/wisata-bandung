@@ -147,16 +147,17 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('Wisata Bandung'),
+        title: Text('Wisata Bandung'),
       ),
       body: LayoutBuilder(builder: (context, constraints) {
         if (constraints.maxWidth <= 600) {
           return TourismPlaceList(tourismPlaceList: tourismPlaceList);
         } else if (constraints.maxWidth <= 800) {
-          return TourismPlaceGrid(tourismPlaceList: tourismPlaceList, crossAxisCount: 3);
+          return TourismPlaceGrid(
+              tourismPlaceList: tourismPlaceList, crossAxisCount: 3);
         } else {
-          return TourismPlaceGrid(tourismPlaceList: tourismPlaceList, crossAxisCount: 4);
+          return TourismPlaceGrid(
+              tourismPlaceList: tourismPlaceList, crossAxisCount: 4);
         }
       }),
     );
@@ -235,34 +236,41 @@ class TourismPlaceGrid extends StatelessWidget {
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
         children: tourismPlaceList.map((place) {
-          return Card(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: Image.asset(
-                    place.imageAsset,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    place.name,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
+          return InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return DetailScreen(place: place);
+              }));
+            },
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: Image.asset(
+                      place.imageAsset,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
-                  child: Text(
-                    place.location,
+                  SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      place.name,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                    child: Text(
+                      place.location,
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         }).toList(),
