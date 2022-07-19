@@ -147,7 +147,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Wisata Bandung'),
+        title: Text('Wisata Bandung. Size: ${MediaQuery.of(context).size.width}'),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
@@ -160,28 +160,26 @@ class MainScreen extends StatelessWidget {
             },
             child: Card(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(child: Image.asset(place.imageAsset)),
                   Expanded(
+                    flex: 2,
                     child: Padding(
                       padding: EdgeInsets.all(8),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '${place.name}',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text('${place.location}'),
-                            ],
+                          Text(
+                            '${place.name}',
+                            style: TextStyle(fontSize: 16),
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text('${place.location}'),
                         ],
                       ),
                     ),
