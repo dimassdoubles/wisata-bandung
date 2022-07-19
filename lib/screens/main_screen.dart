@@ -147,49 +147,125 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Wisata Bandung. Size: ${MediaQuery.of(context).size.width}'),
+        title:
+            Text('Wisata Bandung'),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          final TourismPlace place = tourismPlaceList[index];
-          return InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return DetailScreen(place: place,);
-              }));
-            },
-            child: Card(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(child: Image.asset(place.imageAsset)),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '${place.name}',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text('${place.location}'),
-                        ],
-                      ),
+      body: LayoutBuilder(builder: (context, constraints) {
+        if (constraints.maxWidth <= 600) {
+          return TourismPlaceList(tourismPlaceList: tourismPlaceList);
+        } else if (constraints.maxWidth <= 800) {
+          return TourismPlaceGrid(tourismPlaceList: tourismPlaceList, crossAxisCount: 3);
+        } else {
+          return TourismPlaceGrid(tourismPlaceList: tourismPlaceList, crossAxisCount: 4);
+        }
+      }),
+    );
+  }
+}
+
+class TourismPlaceList extends StatelessWidget {
+  const TourismPlaceList({
+    Key? key,
+    required this.tourismPlaceList,
+  }) : super(key: key);
+
+  final List<TourismPlace> tourismPlaceList;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        final TourismPlace place = tourismPlaceList[index];
+        return InkWell(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return DetailScreen(
+                place: place,
+              );
+            }));
+          },
+          child: Card(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: Image.asset(place.imageAsset)),
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '${place.name}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text('${place.location}'),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      itemCount: tourismPlaceList.length,
+    );
+  }
+}
+
+class TourismPlaceGrid extends StatelessWidget {
+  const TourismPlaceGrid(
+      {Key? key, required this.tourismPlaceList, required this.crossAxisCount})
+      : super(key: key);
+  final List<TourismPlace> tourismPlaceList;
+  final int crossAxisCount;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: GridView.count(
+        crossAxisCount: crossAxisCount,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        children: tourismPlaceList.map((place) {
+          return Card(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Image.asset(
+                    place.imageAsset,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    place.name,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                  child: Text(
+                    place.location,
+                  ),
+                ),
+              ],
             ),
           );
-        },
-        itemCount: tourismPlaceList.length,
+        }).toList(),
       ),
     );
   }
